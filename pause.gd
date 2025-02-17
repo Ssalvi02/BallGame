@@ -1,5 +1,5 @@
 extends CanvasLayer
-var options_menu_scene = preload("res://OptionsMenu.tscn") # Crie esta cena depois
+var options_menu_scene = preload("res://OptionsMenu.tscn")
 
 func _ready():
 	hide()
@@ -15,7 +15,7 @@ func unpause_game():
 
 func go_to_main_menu():
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://main_menu.tscn") # Crie sua cena de menu principal
+	get_tree().change_scene_to_file("res://main_menu.tscn") 
 
 func show_options():
 	hide()
