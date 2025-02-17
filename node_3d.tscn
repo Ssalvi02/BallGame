@@ -1,0 +1,226 @@
+[gd_scene load_steps=17 format=3 uid="uid://bqd2nax6xas34"]
+
+[ext_resource type="Script" path="res://mapa.gd" id="1_2rgdk"]
+[ext_resource type="Script" path="res://Main.gd" id="1_nvc7h"]
+[ext_resource type="Script" path="res://cam.gd" id="1_r6hso"]
+[ext_resource type="Script" path="res://ball.gd" id="2_4tb13"]
+[ext_resource type="Texture2D" uid="uid://qeoh6v8paqvf" path="res://texture-background.jpg" id="4_msn22"]
+[ext_resource type="Texture2D" uid="uid://dohbdjw54blo8" path="res://metal-texture.jpg" id="4_por73"]
+[ext_resource type="Script" path="res://pause.gd" id="6_qyx5k"]
+[ext_resource type="PackedScene" uid="uid://wdbf54tdykwj" path="res://addons/timchi_maze_generation/3d_maze.tscn" id="8_b62cq"]
+[ext_resource type="Script" path="res://finish.gd" id="9_fr2ki"]
+
+[sub_resource type="Environment" id="Environment_awykn"]
+background_mode = 1
+background_color = Color(0.203922, 0.298039, 0.462745, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_barlb"]
+albedo_color = Color(0.699653, 0.699653, 0.699653, 1)
+albedo_texture = ExtResource("4_msn22")
+metallic = 1.0
+metallic_specular = 1.0
+metallic_texture = ExtResource("4_por73")
+roughness = 0.49
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_offset = Vector3(0.26, 0.005, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xm8x3"]
+material = SubResource("StandardMaterial3D_barlb")
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8mh6i"]
+radius = 0.3
+
+[sub_resource type="LabelSettings" id="LabelSettings_rrcyy"]
+font_size = 71
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_14du0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5sq3r"]
+size = Vector3(21.0723, 1.94205, 29.6956)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_nvc7h")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 13.868, 0)
+environment = SubResource("Environment_awykn")
+script = ExtResource("1_r6hso")
+target_node = NodePath("../Ball")
+
+[node name="Ball" type="RigidBody3D" parent="."]
+process_priority = 655
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971282, 1.39243, 9)
+can_sleep = false
+continuous_cd = true
+script = ExtResource("2_4tb13")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
+mesh = SubResource("SphereMesh_xm8x3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+shape = SubResource("SphereShape3D_8mh6i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0778849, 0.996962, 0, -0.996962, 0.0778849, 0, 5.25366, 0)
+shadow_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.035
+anchor_top = 0.062
+anchor_right = 0.118
+anchor_bottom = 0.062
+offset_left = -0.32
+offset_top = -0.176003
+offset_right = 0.0639954
+offset_bottom = 53.824
+text = "Pause"
+
+[node name="Button2" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.86
+anchor_top = 0.796
+anchor_right = 0.965
+anchor_bottom = 0.796
+offset_left = 0.279968
+offset_top = 0.191956
+offset_right = 0.319946
+offset_bottom = 44.192
+grow_horizontal = 0
+grow_vertical = 0
+action_mode = 0
+text = "Zoom In
+"
+
+[node name="Button3" type="Button" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.861
+anchor_top = 0.878
+anchor_right = 0.965
+anchor_bottom = 0.878
+offset_left = 0.12793
+offset_top = 0.0559692
+offset_right = 0.319946
+offset_bottom = 43.056
+grow_horizontal = 0
+grow_vertical = 0
+action_mode = 0
+text = "Zoom Out"
+
+[node name="Pause" type="CanvasLayer" parent="."]
+script = ExtResource("6_qyx5k")
+
+[node name="Panel" type="Panel" parent="Pause"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 196.0
+theme_override_constants/separation = 22
+
+[node name="ResumeButton" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Voltar ao jogo"
+
+[node name="MainMenuButton" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Voltar ao menu"
+
+[node name="OptionsButton" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Opções"
+
+[node name="QuitButton" type="Button" parent="Pause/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Sair"
+
+[node name="Wintex" type="Label" parent="Pause"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.5
+offset_top = -11.5
+offset_right = 92.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Parabéns! Você ganhou!"
+label_settings = SubResource("LabelSettings_rrcyy")
+
+[node name="ColorRect" type="ColorRect" parent="Pause/Wintex"]
+z_index = -20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -2.0
+offset_right = 21.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.140447, 0.140447, 0.140447, 1)
+
+[node name="Maze" type="Node3D" parent="."]
+script = ExtResource("1_2rgdk")
+rotation_speed = 10.0
+
+[node name="Maze3D" parent="Maze" instance=ExtResource("8_b62cq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.00961, 0, -9.96122)
+bake_navigation = true
+
+[node name="Finish" type="Area3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.78827, 0.675017, -2.96467)
+script = ExtResource("9_fr2ki")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/Finish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.731186, 0)
+shape = SubResource("BoxShape3D_14du0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Maze/Finish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1141, 0)
+light_color = Color(0.117647, 0.796078, 0.247059, 1)
+light_energy = 2.293
+light_indirect_energy = 1.485
+light_size = 0.323
+light_specular = 3.0
+omni_range = 1.486
+omni_attenuation = 10.0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Maze"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50635, 0.471024, 0)
+shape = SubResource("BoxShape3D_5sq3r")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Maze"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.51067, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Maze/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50635, 0.471024, 0)
+shape = SubResource("BoxShape3D_5sq3r")
+
+[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
+[connection signal="button_down" from="UI/Button2" to="." method="_on_button_2_button_down"]
+[connection signal="pressed" from="UI/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="body_entered" from="Maze/Finish" to="Maze/Finish" method="_on_body_entered"]

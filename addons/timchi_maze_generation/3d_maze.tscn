@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://wdbf54tdykwj"]
+
+[ext_resource type="Script" path="res://addons/timchi_maze_generation/3dmaze.gd" id="1_161ik"]
+[ext_resource type="MeshLibrary" uid="uid://c2of5rggx7uer" path="res://addons/timchi_maze_generation/assets/maze.tres" id="1_npjdx"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_g7jad"]
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"timchi_maze"
+agent_height = 1.0
+agent_max_climb = 0.1
+
+[node name="Maze3D" type="GridMap"]
+mesh_library = ExtResource("1_npjdx")
+data = {
+"cells": PackedInt32Array(0, 0, 0, 0, 1, 1441792, 0, 2, 3, 0, 3, 1048577, 0, 4, 1441792, 0, 5, 3, 0, 6, 1048576, 0, 7, 1, 0, 8, 1048578, 0, 9, 1048577, 1, 0, 655362, 1, 1, 1, 1, 2, 655361, 1, 3, 655360, 1, 4, 0, 1, 5, 1441793, 1, 6, 1048578, 1, 7, 1048579, 1, 8, 1441792, 1, 9, 1048579, 2, 0, 655362, 2, 1, 655362, 2, 2, 0, 2, 3, 1, 2, 4, 655361, 2, 5, 0, 2, 6, 0, 2, 7, 655362, 2, 8, 0, 2, 9, 655360, 3, 0, 1441795, 3, 1, 655361, 3, 2, 1441793, 3, 3, 1048579, 3, 4, 1441792, 3, 5, 1048580, 3, 6, 655363, 3, 7, 655361, 3, 8, 655362, 3, 9, 0, 4, 0, 655362, 4, 1, 1, 4, 2, 1048576, 4, 3, 655362, 4, 4, 0, 4, 5, 1441793, 4, 6, 3, 4, 7, 1048576, 4, 8, 655362, 4, 9, 655362, 5, 0, 655362, 5, 1, 1441795, 5, 2, 1048578, 5, 3, 655363, 5, 4, 1048579, 5, 5, 0, 5, 6, 655362, 5, 7, 1, 5, 8, 655361, 5, 9, 655362, 6, 0, 655362, 6, 1, 655360, 6, 2, 1441792, 6, 3, 3, 6, 4, 1048579, 6, 5, 1441795, 6, 6, 1048580, 6, 7, 1048580, 6, 8, 3, 6, 9, 655361, 7, 0, 655362, 7, 1, 1441792, 7, 2, 1048578, 7, 3, 655361, 7, 4, 655362, 7, 5, 655360, 7, 6, 655360, 7, 7, 655362, 7, 8, 1441795, 7, 9, 1048576, 8, 0, 655362, 8, 1, 1441792, 8, 2, 1048578, 8, 3, 1048578, 8, 4, 655363, 8, 5, 1048577, 8, 6, 1, 8, 7, 1048579, 8, 8, 1441793, 8, 9, 1048577, 9, 0, 1441793, 9, 1, 1048578, 9, 2, 1048578, 9, 3, 1048578, 9, 4, 1048578, 9, 5, 655363, 9, 6, 655361, 9, 7, 1441793, 9, 8, 1048576, 9, 9, 655360)
+}
+script = ExtResource("1_161ik")
+maze_width = 10
+maze_height = 10
+linearity = 0.5
+seed = 1
+generate_navmesh = false
+hallway = 2
+corner = 1
+junction = 3
+all_way = 4
+rotation_adjustment = 90
+
+[node name="Navigation" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_g7jad")
